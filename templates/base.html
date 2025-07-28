@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <title>Noticias Bolivia</title>
+  <style>
+    body { font-family: sans-serif; max-width: 800px; margin: auto; line-height: 1.6; }
+    h1 { text-align: center; }
+    ul { list-style: none; padding: 0; }
+    li { margin-bottom: 1em; }
+    .source { text-transform: capitalize; font-weight: bold; margin-right: 0.5em; }
+  </style>
+</head>
+<body>
+  <h1>Noticias Bolivia</h1>
+  <p>Actualizado: {{ fetched }}</p>
+  <ul>
+  {% for a in news %}
+    <li><span class="source">{{ a.source }}</span>:
+      <a href="{{ a.url }}" target="_blank" rel="noopener">{{ a.title }}</a>
+    </li>
+  {% endfor %}
+  </ul>
+</body>
+</html>
