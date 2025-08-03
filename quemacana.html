@@ -1,0 +1,36 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Noticias de Bolivia</title>
+    <style>
+        body { font-family: Arial; margin: 20px; }
+        .card { border: 1px solid #ccc; padding: 10px; margin-bottom: 20px; display: flex; }
+        img { width: 150px; height: auto; margin-right: 10px; }
+    </style>
+</head>
+<body>
+    <h1>Resumen de Noticias de Bolivia</h1>
+    <div id="news-container"></div>
+
+    <script>
+        fetch('/api/news')
+            .then(response => response.json())
+            .then(news => {
+                const container = document.getElementById('news-container');
+                news.forEach(item => {
+                    const div = document.createElement('div');
+                    div.className = 'card';
+                    div.innerHTML = `
+                        <img src="${item.image}" alt="imagen">
+                        <div>
+                            <h3><a href="${item.link}" target="_blank">${item.title}</a></h3>
+                            <p>${item.summary}...</p>
+                        </div>
+                    `;
+                    container.appendChild(div);
+                });
+            });
+    </script>
+</body>
+</html>
