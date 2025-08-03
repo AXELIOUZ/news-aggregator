@@ -22,3 +22,16 @@ if __name__ == '__main__':
     for a in scrape_la_razon(url):
         print(a['title'], a['link'])
         time.sleep(1)
+
+def parse_article(article_url):
+    headers = {'User-Agent': 'Mozilla/5.0'}
+    resp = requests.get(article_url, headers=headers)
+    resp.raise_for_status()
+    soup = BeautifulSoup(resp.text, 'html.parser')
+    
+    title = soup.find('h1').get_text(strip=True)
+    date = soup.find('time').get('datetime') if soup.find('time') else None
+    author = soup.find('span', class_='autor')  # revisa si existe
+    author = author.get_text(strip=True) if author else None
+    content = '\n'.join(p.get_text(strip=True) for p in soup.select('div.article-body p'))
+    return {'title': title, 'date': date, 'author': author, 'content': content}
